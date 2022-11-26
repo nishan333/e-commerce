@@ -4,9 +4,10 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 // Screens
 import Home from "./screens/Home";
+import Events from "./screens/Events";
 
 export default function App() {
-  const [defaultScreen, setDefaultScreen] = useState("Home");
+  const [defaultScreen, setDefaultScreen] = useState("Events");
 
   const Stack = createNativeStackNavigator();
 
@@ -16,6 +17,13 @@ export default function App() {
         <Stack.Screen
           name="Home"
           component={Home}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Events"
+          component={Events}
           options={{
             headerShown: false,
           }}
