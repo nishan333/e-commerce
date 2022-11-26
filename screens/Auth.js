@@ -6,6 +6,7 @@ import {
   Dimensions,
   TextInput,
   Pressable,
+  Alert,
 } from "react-native";
 import styles from "../styles/auth.js";
 import Svg, { Image, Ellipse, ClipPath } from "react-native-svg";
@@ -19,14 +20,19 @@ import Animated, {
   withSequence,
   withSpring,
 } from "react-native-reanimated";
+import * as SecureStore from "expo-secure-store";
 
 import { BackHandler, Keyboard } from "react-native";
+import axios from "axios";
 
-export default function Auth() {
+export default function Auth({ navigation }) {
   const { height, width } = Dimensions.get("window");
   const imagePosition = useSharedValue(1);
   const formButtonScale = useSharedValue(1);
   const [isRegistering, setIsRegistering] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
 
   function handleBackButtonClick() {
     if (imagePosition.value === 1) {
@@ -131,6 +137,73 @@ export default function Auth() {
     };
   }, []);
 
+  const save = async (key, value) => {
+    await SecureStore.setItemAsync(key, value);
+  };
+
+  const handleSubmit = async () => {
+    runOnJS(
+      (formButtonScale.value = withSequence(withSpring(1.1), withSpring(1)))
+    );
+
+    if (isRegistering) {
+      try {
+        const { data } = await axios({
+          method: "POST",
+          url: "http://api.cup2022.ir/api/v1/user",
+          data: {
+            name,
+            email,
+            password,
+            passwordConfirm: password,
+          },
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        Alert.alert("Success", "You have been registered sucessfully");
+        save("token", JSON.stringify(data.data.token));
+
+        //Reset the stack and navigate to the home screen
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "Home" }],
+        });
+      } catch (error) {
+        Alert.alert("Error occured", error);
+        console.log(error);
+      }
+    } else {
+      //login
+      try {
+        const { data } = await axios({
+          method: "POST",
+          url: "http://api.cup2022.ir/api/v1/user/login",
+          data: {
+            email,
+            password,
+          },
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        Alert.alert("Success", "You have been logged in sucessfully");
+        save("token", JSON.stringify(data.data.token));
+
+        //Reset the stack and navigate to the home screen
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "Home" }],
+        });
+      } catch (error) {
+        Alert.alert("Error occured", error);
+        console.log(error.message);
+      }
+    }
+  };
+
   return (
     <Animated.View style={styles.container}>
       <Animated.View style={[StyleSheet.absoluteFill, imageAnimatedStyle]}>
@@ -175,30 +248,30 @@ export default function Auth() {
             placeholder="Email"
             placeholderTextColor="black"
             style={styles.textInput}
+            value={email}
+            textContentType="emailAddress"
+            onChangeText={(text) => setEmail(text)}
           />
           {isRegistering && (
             <TextInput
-              placeholder=" Full Name"
+              placeholder="Full Name"
               placeholderTextColor="black"
               style={styles.textInput}
+              value={name}
+              onChangeText={(text) => setName(text)}
             />
           )}
           <TextInput
-            placeholder=" Password"
+            placeholder="Password"
             placeholderTextColor="black"
             style={styles.textInput}
+            value={password}
+            onChangeText={(text) => setPassword(text)}
+            secureTextEntry
+            textContentType="password"
           />
           <Animated.View style={[styles.formButton, formButtonAnimatedStyle]}>
-            <Pressable
-              onPress={() =>
-                runOnJS(
-                  (formButtonScale.value = withSequence(
-                    withSpring(1.5),
-                    withSpring(1)
-                  ))
-                )
-              }
-            >
+            <Pressable onPress={handleSubmit}>
               <Text style={styles.buttonText}>
                 {isRegistering ? "REGISTER" : "LOG IN"}
               </Text>
