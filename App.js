@@ -3,11 +3,11 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 // Screens
-import Home from "./screens/Home";
-import Events from "./screens/Events";
+import Home from "./screens/Home.js";
+import Events from "./screens/Events.js";
 
 export default function App() {
-  const [defaultScreen, setDefaultScreen] = useState("Events");
+  const [defaultScreen, setDefaultScreen] = useState("home");
 
   const Stack = createNativeStackNavigator();
 

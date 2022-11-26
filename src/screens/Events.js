@@ -1,27 +1,9 @@
-import { useEffect, useState } from "react";
-import { View, Text, Alert, ScrollView, Image } from "react-native";
-import axios from "axios";
+import { View, Text, ScrollView, Image } from "react-native";
 
+// styles
 import styles from "../styles/events";
 
 function Events() {
-  const [events, setEvents] = useState([]);
-
-  const getEvents = async () => {
-    try {
-      const { data } = await axios.get(
-        "https://worldcupjson.net/matches?by_date=asc"
-      );
-      setEvents(data);
-    } catch (error) {
-      Alert.alert("Error", error.message);
-    }
-  };
-
-  useEffect(() => {
-    getEvents();
-  }, []);
-
   return (
     <View style={styles.container}>
       <Text>Events</Text>
