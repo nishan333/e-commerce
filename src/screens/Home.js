@@ -9,8 +9,9 @@ import styles from "../styles/Home.js";
 
 // components
 import Match from "../components/Match.js";
+import Navigation from "../components/Navigation.js";
 
-function Home() {
+function Home({ navigation }) {
   const { matchesInfo: events } = useContext(cp);
   return (
     <ScrollView>
@@ -22,6 +23,10 @@ function Home() {
         {events.map((event) => {
           return <Match data={event} key={event.id} />;
         })}
+
+        {/* navigation */}
+
+        <Navigation navigation={navigation} />
       </View>
     </ScrollView>
   );
