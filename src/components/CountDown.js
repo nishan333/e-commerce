@@ -10,7 +10,6 @@ const CountDown = ({ trackingTime }) => {
   const ourTime = new Date();
 
   const DifferenceSeconds = parseInt((matchTime - ourTime) / 1000);
-  console.log(DifferenceSeconds);
 
   return (
     <Counter

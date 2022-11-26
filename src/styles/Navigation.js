@@ -5,16 +5,19 @@ export default StyleSheet.create({
     flexDirection: "row",
     width: Dimensions.get("window").width,
     backgroundColor: "#fff",
-    height: 100,
+    height: 90,
     justifyContent: "space-evenly",
     alignItems: "center",
     borderRadius: 20,
+    position: "absolute",
+    bottom: 0,
+    left: 0,
   },
-
   navItem: {
     alignItems: "center",
+    width: 100,
+    height: 20,
   },
-
   txt: {
     fontSize: 12,
     color: "#699BF7",

@@ -14,21 +14,22 @@ import Navigation from "../components/Navigation.js";
 function Home({ navigation }) {
   const { matchesInfo: events } = useContext(cp);
   return (
-    <ScrollView>
+    <>
       <View style={styles.container}>
-        {/* upper nav */}
-        {/* hero section  */}
+        <ScrollView>
+          {/* upper nav */}
+          {/* hero section  */}
 
-        {/* events */}
-        {events.map((event) => {
-          return <Match data={event} key={event.id} />;
-        })}
+          {/* events */}
+          {events.map((event) => {
+            return <Match data={event} key={event.id} />;
+          })}
+        </ScrollView>
 
         {/* navigation */}
-
-        <Navigation navigation={navigation} />
       </View>
-    </ScrollView>
+      <Navigation active={"Home"} />
+    </>
   );
 }
 
