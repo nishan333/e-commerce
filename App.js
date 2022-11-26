@@ -2,7 +2,10 @@ import React, { useState } from "react";
 
 // Screens
 import Home from "./src/screens/Home.js";
-import Events from "./src/screens/Events.js";
+import Chat from "./src/screens/Chat.js";
+import ShowAll from "./src/screens/ShowAll.js";
+
+// context
 import Context from "./Context.js";
 
 // external libraries
@@ -42,13 +45,23 @@ export default function App() {
               component={Home}
               options={{
                 headerShown: false,
+                animation: "none",
               }}
             />
             <Stack.Screen
-              name="Events"
-              component={Events}
+              name="Chat"
+              component={Chat}
               options={{
                 headerShown: false,
+                animation: "none",
+              }}
+            />
+            <Stack.Screen
+              name="ShowAll"
+              component={ShowAll}
+              options={{
+                headerShown: false,
+                animation: "none",
               }}
             />
           </Stack.Navigator>
