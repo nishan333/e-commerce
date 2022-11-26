@@ -33,7 +33,11 @@ function Events() {
                 <Image
                   style={styles.flag}
                   source={{
-                    uri: `https://countryflagsapi.com/png/${event.home_team.name}`,
+                    uri: `https://countryflagsapi.com/png/${
+                      event.home_team.name == "Korea Republic"
+                        ? event.home_team.country
+                        : event.home_team.name
+                    }`,
                   }}
                 />
                 <Text>{event.home_team.name}</Text>
