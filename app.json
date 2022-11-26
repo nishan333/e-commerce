@@ -1,7 +1,8 @@
 {
   "expo": {
-    "name": "FIFA-World-Cup",
-    "slug": "FIFA-World-Cup",
+    "name": "Copa 2022",
+    "slug": "FIFA-World-Cup-2022",
+    "description": "Get latest news about FIFA World Cup 2022. Also enjoy live chat with other football fans.",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -14,20 +15,16 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
+      "package": "com.copa2022",
+      "versionCode": 1
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/logo.png"
     }
   }
 }
