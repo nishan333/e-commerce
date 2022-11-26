@@ -7,6 +7,9 @@ import styles from "../styles/Match.js";
 // components
 import CountDown from "../components/CountDown.js";
 
+// moment for dates
+import moment from "moment";
+
 const Match = ({ data }) => {
   if (
     data.away_team.name === "To Be Determined" ||
@@ -38,7 +41,7 @@ const Match = ({ data }) => {
             </Text>
             <Text style={styles.dateTime}>
               {data.datetime
-                ? new Date(data.datetime).toDateString()
+                ? moment(data.datetime).format("MMM Do YY")
                 : data.datetime}
             </Text>
           </>
