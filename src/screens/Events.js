@@ -1,9 +1,13 @@
+import { useContext } from "react";
 import { View, Text, ScrollView, Image } from "react-native";
+import { cp } from "../../Context";
 
 // styles
 import styles from "../styles/events";
 
 function Events() {
+  const { matchInfo: events } = useContext(cp);
+
   return (
     <View style={styles.container}>
       <Text>Events</Text>

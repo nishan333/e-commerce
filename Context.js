@@ -1,8 +1,9 @@
-import { createContext, useEffect } from "react";
+import axios from "axios";
+import { createContext, useEffect, useState } from "react";
 
-const cp = createContext();
+export const cp = createContext();
 
-const Context = () => {
+const Context = ({ children }) => {
   // all the events
   const [events, setEvents] = useState([]);
 
@@ -14,7 +15,7 @@ const Context = () => {
       );
       setEvents(data);
     } catch (error) {
-      Alert.alert("Error", error.message);
+      console.log(error.message);
     }
   };
 
@@ -28,7 +29,9 @@ const Context = () => {
       value={{
         matchesInfo: events,
       }}
-    ></cp.Provider>
+    >
+      {children}
+    </cp.Provider>
   );
 };
 
