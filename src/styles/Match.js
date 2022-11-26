@@ -9,8 +9,8 @@ export default StyleSheet.create({
   container: {
     marginTop: 10,
     flexDirection: "row",
-    width: Dimensions.get("window").width - 10,
-    marginLeft: 5,
+    width: Dimensions.get("window").width - 20,
+    marginLeft: 10,
     backgroundColor: "#e8e8e8",
     padding: 50,
     paddingHorizontal: 10,

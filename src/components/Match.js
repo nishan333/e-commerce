@@ -8,7 +8,6 @@ import styles from "../styles/Match.js";
 import CountDown from "../components/CountDown.js";
 
 const Match = ({ data }) => {
-  console.log(data.datetime);
   if (
     data.away_team.name === "To Be Determined" ||
     data.home_team.name === "To Be Determined"
@@ -33,18 +32,19 @@ const Match = ({ data }) => {
 
       <View style={styles.statContainer}>
         {data.status === "completed" ? (
-          <Text style={styles.score}>
-            {data.home_team.goals + "  :  " + data.away_team.goals}
-          </Text>
+          <>
+            <Text style={styles.score}>
+              {data.home_team.goals + "  :  " + data.away_team.goals}
+            </Text>
+            <Text style={styles.dateTime}>
+              {data.datetime
+                ? new Date(data.datetime).toDateString()
+                : data.datetime}
+            </Text>
+          </>
         ) : (
           <CountDown trackingTime={data.datetime} />
         )}
-
-        <Text style={styles.dateTime}>
-          {data.datetime
-            ? new Date(data.datetime).toDateString()
-            : data.datetime}
-        </Text>
       </View>
 
       <View style={[styles.country, styles.countryTwo]}>
