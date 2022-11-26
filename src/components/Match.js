@@ -4,7 +4,11 @@ import React from "react";
 // styles
 import styles from "../styles/Match.js";
 
+// components
+import CountDown from "../components/CountDown.js";
+
 const Match = ({ data }) => {
+  console.log(data.datetime);
   if (
     data.away_team.name === "To Be Determined" ||
     data.home_team.name === "To Be Determined"
@@ -28,10 +32,17 @@ const Match = ({ data }) => {
       </View>
 
       <View style={styles.statContainer}>
-        <Text>{data.status}</Text>
-        <Text>
+        {data.status === "completed" ? (
+          <Text style={styles.score}>
+            {data.home_team.goals + "  :  " + data.away_team.goals}
+          </Text>
+        ) : (
+          <CountDown trackingTime={data.datetime} />
+        )}
+
+        <Text style={styles.dateTime}>
           {data.datetime
-            ? new Date(data.datetime).toLocaleString()
+            ? new Date(data.datetime).toDateString()
             : data.datetime}
         </Text>
       </View>

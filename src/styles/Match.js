@@ -12,7 +12,7 @@ export default StyleSheet.create({
     width: Dimensions.get("window").width - 10,
     marginLeft: 5,
     backgroundColor: "#e8e8e8",
-    padding: 30,
+    padding: 50,
     paddingHorizontal: 10,
     justifyContent: "space-evenly",
     alignItems: "center",
@@ -28,5 +28,9 @@ export default StyleSheet.create({
   },
   statContainer: {
     alignItems: "center",
+  },
+  score: {
+    fontSize: 40,
+    color: "#333",
   },
 });
