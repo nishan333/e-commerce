@@ -20,7 +20,7 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated";
 
-import { BackHandler } from "react-native";
+import { BackHandler, Keyboard } from "react-native";
 
 export default function Auth() {
   const { height, width } = Dimensions.get("window");
@@ -29,25 +29,31 @@ export default function Auth() {
   const [isRegistering, setIsRegistering] = useState(false);
 
   function handleBackButtonClick() {
-    imagePosition.value = 1;
+    if (imagePosition.value === 1) {
+      BackHandler.exitApp();
+    } else {
+      imagePosition.value = 1;
+    }
     return true;
   }
 
   const imageAnimatedStyle = useAnimatedStyle(() => {
     const interpolation = interpolate(
       imagePosition.value,
-      [0, 1],
-      [-height / 1.1, 0]
+      [0, 1, 2],
+      [-height / 1.7, 0, -height / 1.1]
     );
     return {
-      transform: [
-        { translateY: withTiming(interpolation, { duration: 1000 }) },
-      ],
+      transform: [{ translateY: withTiming(interpolation, { duration: 800 }) }],
     };
   });
 
   const buttonsAnimatedStyle = useAnimatedStyle(() => {
-    const interpolation = interpolate(imagePosition.value, [0, 1], [250, 0]);
+    const interpolation = interpolate(
+      imagePosition.value,
+      [0, 1, 2],
+      [250, 0, 250]
+    );
     return {
       opacity: withTiming(imagePosition.value, { duration: 500 }),
       transform: [
@@ -69,7 +75,7 @@ export default function Auth() {
   const formAnimatedStyle = useAnimatedStyle(() => {
     return {
       opacity:
-        imagePosition.value === 0
+        imagePosition.value === 0 || imagePosition.value === 2
           ? withDelay(400, withTiming(1, { duration: 800 }))
           : withTiming(0, { duration: 300 }),
     };
@@ -105,6 +111,26 @@ export default function Auth() {
     };
   }, []);
 
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      "keyboardDidShow",
+      () => {
+        imagePosition.value = 2;
+      }
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      () => {
+        imagePosition.value = 0;
+      }
+    );
+
+    return () => {
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
+  }, []);
+
   return (
     <Animated.View style={styles.container}>
       <Animated.View style={[StyleSheet.absoluteFill, imageAnimatedStyle]}>
@@ -123,7 +149,14 @@ export default function Auth() {
         <Animated.View
           style={[styles.closeButtonContainer, closeButtonContainerStyle]}
         >
-          <Text onPress={() => (imagePosition.value = 1)}>X</Text>
+          <Text
+            onPress={() => {
+              Keyboard.dismiss();
+              imagePosition.value = 1;
+            }}
+          >
+            X
+          </Text>
         </Animated.View>
       </Animated.View>
       <View style={styles.bottomContainer}>
@@ -138,15 +171,6 @@ export default function Auth() {
           </Pressable>
         </Animated.View>
         <Animated.View style={[styles.formInputContainer, formAnimatedStyle]}>
-          {/* <ScrollView
-          // showsVerticalScrollIndicator={false}
-          // style={{
-          //   flex: 1,
-          // }}
-          // contentContainerStyle={{
-          //   flexGrow: 1,
-          // }}
-          > */}
           <TextInput
             placeholder="Email"
             placeholderTextColor="black"
@@ -180,7 +204,6 @@ export default function Auth() {
               </Text>
             </Pressable>
           </Animated.View>
-          {/* </ScrollView> */}
         </Animated.View>
       </View>
     </Animated.View>
