@@ -11,11 +11,13 @@ import styles from "../styles/Home.js";
 // components
 import Match from "../components/Match.js";
 import Navigation from "../components/Navigation.js";
+import UpdatesPopup from "../components/UpdatesPopup";
 
 function Home() {
   const router = useNavigation();
 
   const {
+    popup: [showDetails, setShowDetails],
     search: [, setQuery],
     events: {
       all: allMatches,
@@ -26,6 +28,7 @@ function Home() {
     },
   } = useContext(cp);
 
+  console.log(showDetails);
   return (
     <>
       <View style={styles.container}>
@@ -41,7 +44,17 @@ function Home() {
             <View style={styles.EventContainer}>
               <Text style={styles.title}>Live Matches</Text>
               {liveMatches.map((event) => {
-                return <Match data={event} key={event.id} mode={"live"} />;
+                return (
+                  <>
+                    <Pressable
+                      onPress={() => {
+                        setShowDetails(event.id);
+                      }}
+                    >
+                      <Match data={event} key={event.id} mode={"live"} />
+                    </Pressable>
+                  </>
+                );
               })}
             </View>
           )}
@@ -50,7 +63,17 @@ function Home() {
           <View style={styles.EventContainer}>
             <Text style={styles.title}>Todays Matches</Text>
             {todaysMatches.map((event) => {
-              return <Match data={event} key={event.id} />;
+              return (
+                <>
+                  <Pressable
+                    onPress={() => {
+                      setShowDetails(event.id);
+                    }}
+                  >
+                    <Match data={event} key={event.id} />
+                  </Pressable>
+                </>
+              );
             })}
           </View>
 
@@ -86,7 +109,18 @@ function Home() {
             </Pressable>
 
             {previousMatches.map((event, index) => {
-              if (index < 2) return <Match data={event} key={event.id} />;
+              if (index < 2)
+                return (
+                  <>
+                    <Pressable
+                      onPress={() => {
+                        setShowDetails(event.id);
+                      }}
+                    >
+                      <Match data={event} key={event.id} />
+                    </Pressable>
+                  </>
+                );
             })}
           </View>
         </ScrollView>
@@ -94,6 +128,7 @@ function Home() {
         {/* navigation */}
       </View>
       <Navigation active={"Home"} />
+      {showDetails ? <UpdatesPopup matchId={showDetails} /> : <></>}
     </>
   );
 }

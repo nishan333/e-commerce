@@ -23,6 +23,9 @@ const Context = ({ children }) => {
   // contains the search output.
   const [result, setResult] = useState([]);
 
+  // this will show the details of the match
+  const [showDetails, setShowDetails] = useState([]);
+
   //   gets all the events data from the api
   const getAllEvents = async () => {
     try {
@@ -153,6 +156,8 @@ const Context = ({ children }) => {
         },
         search: [query, setQuery],
         output: [result],
+
+        popup: [showDetails, setShowDetails],
       }}
     >
       {children}

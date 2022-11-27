@@ -1,4 +1,4 @@
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, Pressable } from "react-native";
 import React, { useContext } from "react";
 
 // components
@@ -15,6 +15,7 @@ const ShowAll = ({ navigation }) => {
     search: [query],
     output: [result],
     events: { upNext: upcomingMatches, pre: previousMatches },
+    popup: [showDetails, setShowDetails],
   } = useContext(cp);
   return (
     <>
@@ -32,14 +33,36 @@ const ShowAll = ({ navigation }) => {
           >
             {query === "previousAll"
               ? previousMatches.map((event, index) => {
-                  return <Match data={event} key={event.id} />;
+                  return (
+                    <>
+                      <Pressable
+                        onPress={() => {
+                          setShowDetails(event.id);
+                        }}
+                        key={event.id}
+                      >
+                        <Match data={event} />
+                      </Pressable>
+                    </>
+                  );
                 })
               : query === "upcomingAll"
               ? upcomingMatches.map((event, index) => {
                   return <Match data={event} key={event.id} />;
                 })
               : result.map((event) => {
-                  return <Match data={event} key={event.id} />;
+                  return (
+                    <>
+                      <Pressable
+                        onPress={() => {
+                          setShowDetails(event.id);
+                        }}
+                        key={event.id}
+                      >
+                        <Match data={event} />
+                      </Pressable>
+                    </>
+                  );
                 })}
           </View>
         </ScrollView>
