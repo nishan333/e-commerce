@@ -13,10 +13,15 @@ import Navigation from "../components/Navigation.js";
 
 function Home() {
   const {
-    events: { all: allMatches, today: todaysMatches, live: liveMatches },
+    events: {
+      all: allMatches,
+      today: todaysMatches,
+      live: liveMatches,
+      upNext: upcomingMatches,
+      pre: previousMatches,
+    },
   } = useContext(cp);
 
-  // const reversedMatches = allMatches.reverse();
   return (
     <>
       <View style={styles.container}>
@@ -31,7 +36,7 @@ function Home() {
           <View style={styles.EventContainer}>
             <Text style={styles.title}>Live Matches</Text>
             {liveMatches.map((event) => {
-              return <Match data={event} key={event.id} type={"live"} />;
+              return <Match data={event} key={event.id} mode={"live"} />;
             })}
           </View>
 
@@ -43,22 +48,17 @@ function Home() {
             })}
           </View>
 
-          {/* upcomming Matches */}
-          {/* <View style={styles.EventContainer}>
+          {/* upcoming Matches */}
+          <View style={styles.EventContainer}>
             <View style={styles.upperRow}>
-              <Text style={styles.title}>Upcomming Matches</Text>
+              <Text style={styles.title}>Upcoming Matches</Text>
               <Text style={styles.seeAll}> See All </Text>
             </View>
 
-            {reversedMatches.map((event, index) => {
-              if (
-                event.away_team.name === "To Be Determined" ||
-                event.home_team.name === "To Be Determined"
-              )
-                return <></>;
-              return <Match data={event} key={event.id} />;
+            {upcomingMatches.map((event, index) => {
+              if (index < 2) return <Match data={event} key={event.id} />;
             })}
-          </View> */}
+          </View>
 
           {/* Previous Matches */}
           <View style={styles.EventContainer}>
@@ -67,9 +67,8 @@ function Home() {
               <Text style={styles.seeAll}> See All </Text>
             </View>
 
-            {allMatches.map((event, index) => {
-              if (index > 2) return <></>;
-              return <Match data={event} key={event.id} />;
+            {previousMatches.map((event, index) => {
+              if (index < 2) return <Match data={event} key={event.id} />;
             })}
           </View>
         </ScrollView>

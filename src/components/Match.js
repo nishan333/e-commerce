@@ -10,7 +10,7 @@ import CountDown from "../components/CountDown.js";
 // moment for dates
 import moment from "moment";
 
-const Match = ({ data }) => {
+const Match = ({ data, mode }) => {
   if (
     data.away_team.name === "To Be Determined" ||
     data.home_team.name === "To Be Determined"
@@ -34,13 +34,15 @@ const Match = ({ data }) => {
       </View>
 
       <View style={styles.statContainer}>
-        {data.status === "completed" ? (
+        {data.status === "completed" || mode === "live" ? (
           <>
             <Text style={styles.score}>
               {data.home_team.goals + "  :  " + data.away_team.goals}
             </Text>
             <Text style={styles.dateTime}>
-              {data.datetime
+              {mode === "live"
+                ? "Live"
+                : data.datetime
                 ? moment(data.datetime).format("MMM Do YY")
                 : data.datetime}
             </Text>
