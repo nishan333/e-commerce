@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
-import { View, Text, ScrollView, Image } from "react-native";
+import { View, Text, ScrollView, Image, Pressable } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 // context
 import { cp } from "../../Context";
@@ -12,7 +13,10 @@ import Match from "../components/Match.js";
 import Navigation from "../components/Navigation.js";
 
 function Home() {
+  const router = useNavigation();
+
   const {
+    search: [, setQuery],
     events: {
       all: allMatches,
       today: todaysMatches,
@@ -52,10 +56,16 @@ function Home() {
 
           {/* upcoming Matches */}
           <View style={styles.EventContainer}>
-            <View style={styles.upperRow}>
+            <Pressable
+              style={styles.upperRow}
+              // onPress={() => {
+              //   setQuery("upcomingAll");
+              //   router.navigate("ShowAll");
+              // }}
+            >
               <Text style={styles.title}>Upcoming Matches</Text>
               <Text style={styles.seeAll}> See All </Text>
-            </View>
+            </Pressable>
 
             {upcomingMatches.map((event, index) => {
               if (index < 2) return <Match data={event} key={event.id} />;
@@ -64,10 +74,16 @@ function Home() {
 
           {/* Previous Matches */}
           <View style={styles.EventContainer}>
-            <View style={styles.upperRow}>
+            <Pressable
+              style={styles.upperRow}
+              onPress={() => {
+                setQuery("previousAll");
+                router.navigate("ShowAll");
+              }}
+            >
               <Text style={styles.title}>Previous Matches</Text>
               <Text style={styles.seeAll}> See All </Text>
-            </View>
+            </Pressable>
 
             {previousMatches.map((event, index) => {
               if (index < 2) return <Match data={event} key={event.id} />;

@@ -4999,6 +4999,11 @@ minipass@^3.0.0, minipass@^3.1.1:
   dependencies:
     yallist "^4.0.0"
 
+minisearch@^6.0.0-beta.1:
+  version "6.0.0-beta.1"
+  resolved "https://registry.yarnpkg.com/minisearch/-/minisearch-6.0.0-beta.1.tgz#74296710fae758984b90f944cd532cc05791ac48"
+  integrity sha512-/qHyE4qBbBtli/zgR8H/Dus3cOxQdTciglY/QEyU6FDGCd4lRtYWwkhJ/yDXZvblFXoWwYILu3qCFqsTtF53+g==
+
 minizlib@^2.1.1:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/minizlib/-/minizlib-2.1.2.tgz#e90d3466ba209b932451508a11ce3d3632145931"

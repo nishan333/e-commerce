@@ -1,6 +1,7 @@
 import axios from "axios";
 import { createContext, useEffect, useState, useTransition } from "react";
 
+// external libraries
 import moment from "moment";
 
 export const cp = createContext();
@@ -9,11 +10,18 @@ const Context = ({ children }) => {
   // all the events
   const [events, setEvents] = useState([]);
 
+  // data related states that store data from the api
   const [allMatches, setAllMatches] = useState([]);
   const [todaysMatches, setTodaysMatches] = useState([]);
   const [liveMatches, setLiveMatches] = useState([]);
   const [upcomingMatches, setUpcomingMatches] = useState([]);
   const [previousMatches, setPreviousMatches] = useState([]);
+
+  // contains the search Queries
+  const [query, setQuery] = useState();
+
+  // contains the search output.
+  const [result, setResult] = useState([]);
 
   //   gets all the events data from the api
   const getAllEvents = async () => {
@@ -109,6 +117,21 @@ const Context = ({ children }) => {
     }
   };
 
+  useEffect(() => {
+    if (!allMatches) return;
+
+    const r = [];
+
+    previousMatches.forEach((match, index) => {
+      const c1 = match.home_team.name.toLowerCase();
+      const c2 = match.away_team.name.toLowerCase();
+      if (c1.includes(query.toLowerCase()) || c2.includes(query.toLowerCase()))
+        r.push(match);
+    });
+
+    setResult(r);
+  }, [query]);
+
   // component did mount
   useEffect(() => {
     getAllEvents(); // gets all the matches
@@ -128,6 +151,8 @@ const Context = ({ children }) => {
           upNext: upcomingMatches,
           pre: previousMatches,
         },
+        search: [query, setQuery],
+        output: [result],
       }}
     >
       {children}
