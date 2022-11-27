@@ -33,12 +33,14 @@ function Home() {
           />
 
           {/* LIVE matches */}
-          <View style={styles.EventContainer}>
-            <Text style={styles.title}>Live Matches</Text>
-            {liveMatches.map((event) => {
-              return <Match data={event} key={event.id} mode={"live"} />;
-            })}
-          </View>
+          {liveMatches.length !== 0 && (
+            <View style={styles.EventContainer}>
+              <Text style={styles.title}>Live Matches</Text>
+              {liveMatches.map((event) => {
+                return <Match data={event} key={event.id} mode={"live"} />;
+              })}
+            </View>
+          )}
 
           {/* todays Matches */}
           <View style={styles.EventContainer}>
