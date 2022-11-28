@@ -3,17 +3,26 @@ import React, { useContext, useEffect } from "react";
 
 // styles
 import styles from "../styles/components/UpdatePopup.js";
+
+// external
 import axios from "axios";
+
+// context
 import { cp } from "../../Context.js";
 
-const UpdatesPopup = ({ matchId }) => {
+const UpdatesPopup = () => {
   const {
     popup: [showDetails, setShowDetails],
   } = useContext(cp);
+  const [fetchData, setFetchData] = useState();
 
   const fetchMatchData = async () => {
     try {
-      await axios.get(`https://worldcupjson.net/matches/${matchId}`);
+      const { data } = await axios.get(
+        `https://worldcupjson.net/matches/${showDetails}`
+      );
+
+      console.log(data);
     } catch (e) {
       console.log(e.message);
     }
@@ -23,17 +32,21 @@ const UpdatesPopup = ({ matchId }) => {
   };
   useEffect(() => {
     fetchMatchData();
-  }, []);
+  }, [showDetails]);
 
   return (
     <>
-      <View style={styles.mainContainer}>
-        <Pressable style={styles.blackScreen} onPress={closePopup}></Pressable>
+      <Pressable style={styles.blackScreen} onPress={closePopup}></Pressable>
 
-        <View style={styles.whitePopUp}>
-          {/* navigation */}
-          {/* cards */}
-        </View>
+      <View style={styles.whitePopUp}>
+        {/* navigation */}
+        {/* cards */}
+
+        {
+          fetchData.length> 0 ? fetchData.map((event, index)=>{
+            return <Event data={event} key= {index} />
+          }) 
+        }
       </View>
     </>
   );

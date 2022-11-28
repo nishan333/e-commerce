@@ -20,7 +20,6 @@ function Home() {
     popup: [showDetails, setShowDetails],
     search: [, setQuery],
     events: {
-      all: allMatches,
       today: todaysMatches,
       live: liveMatches,
       upNext: upcomingMatches,
@@ -28,7 +27,8 @@ function Home() {
     },
   } = useContext(cp);
 
-  console.log(showDetails);
+  console.log(setShowDetails ? "True ho " : "hait false");
+
   return (
     <>
       <View style={styles.container}>
@@ -128,7 +128,7 @@ function Home() {
         {/* navigation */}
       </View>
       <Navigation active={"Home"} />
-      {showDetails ? <UpdatesPopup matchId={showDetails} /> : <></>}
+      {showDetails !== false ? <UpdatesPopup /> : <></>}
     </>
   );
 }
