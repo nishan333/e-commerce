@@ -27,8 +27,6 @@ function Home() {
     },
   } = useContext(cp);
 
-  console.log(setShowDetails ? "True ho " : "hait false");
-
   return (
     <>
       <View style={styles.container}>

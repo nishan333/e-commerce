@@ -24,7 +24,7 @@ const Context = ({ children }) => {
   const [result, setResult] = useState([]);
 
   // this will show the details of the match
-  const [showDetails, setShowDetails] = useState([]);
+  const [showDetails, setShowDetails] = useState(false);
 
   //   gets all the events data from the api
   const getAllEvents = async () => {

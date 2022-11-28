@@ -49,7 +49,6 @@ const Chats = () => {
   }, []);
 
   const onChannelPressed = (channel) => {
-    console.log(channel);
     setChannelSelected(channel);
   };
 
