@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { View, Text, ScrollView, Image, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
@@ -12,6 +12,7 @@ import styles from "../styles/Home.js";
 import Match from "../components/Match.js";
 import Navigation from "../components/Navigation.js";
 import UpdatesPopup from "../components/UpdatesPopup";
+import Loading from "../styles/components/Loading";
 
 function Home() {
   const router = useNavigation();
@@ -25,7 +26,19 @@ function Home() {
       upNext: upcomingMatches,
       pre: previousMatches,
     },
+    animation: [loading, setLoading],
   } = useContext(cp);
+
+  useEffect(() => {
+    if (
+      !previousMatches.length ||
+      !todaysMatches.length ||
+      !upcomingMatches.length
+    )
+      return;
+
+    setLoading(false);
+  }, [previousMatches]);
 
   return (
     <>
@@ -125,6 +138,11 @@ function Home() {
 
         {/* navigation */}
       </View>
+
+      {/* the loading animation */}
+
+      {loading ? <Loading /> : <></>}
+
       <Navigation active={"Home"} />
       {showDetails !== false ? <UpdatesPopup /> : <></>}
     </>

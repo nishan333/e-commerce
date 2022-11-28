@@ -1,5 +1,11 @@
 import axios from "axios";
-import { createContext, useEffect, useState, useTransition } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  useTransition,
+} from "react";
 
 // external libraries
 import moment from "moment";
@@ -25,6 +31,9 @@ const Context = ({ children }) => {
 
   // this will show the details of the match
   const [showDetails, setShowDetails] = useState(false);
+
+  // for the loading animation
+  const [loading, setLoading] = useState(true);
 
   //   gets all the events data from the api
   const getAllEvents = async () => {
@@ -158,6 +167,7 @@ const Context = ({ children }) => {
         output: [result],
 
         popup: [showDetails, setShowDetails],
+        animation: [loading, setLoading],
       }}
     >
       {children}
