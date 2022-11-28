@@ -43,9 +43,9 @@ function Home() {
           {liveMatches.length !== 0 && (
             <View style={styles.EventContainer}>
               <Text style={styles.title}>Live Matches</Text>
-              {liveMatches.map((event) => {
+              {liveMatches.map((event, index) => {
                 return (
-                  <>
+                  <React.Fragment key={index}>
                     <Pressable
                       onPress={() => {
                         setShowDetails(event.id);
@@ -53,7 +53,7 @@ function Home() {
                     >
                       <Match data={event} key={event.id} mode={"live"} />
                     </Pressable>
-                  </>
+                  </React.Fragment>
                 );
               })}
             </View>
@@ -62,9 +62,9 @@ function Home() {
           {/* todays Matches */}
           <View style={styles.EventContainer}>
             <Text style={styles.title}>Todays Matches</Text>
-            {todaysMatches.map((event) => {
+            {todaysMatches.map((event, index) => {
               return (
-                <>
+                <React.Fragment key={index}>
                   <Pressable
                     onPress={() => {
                       setShowDetails(event.id);
@@ -72,7 +72,7 @@ function Home() {
                   >
                     <Match data={event} key={event.id} />
                   </Pressable>
-                </>
+                </React.Fragment>
               );
             })}
           </View>
@@ -111,7 +111,7 @@ function Home() {
             {previousMatches.map((event, index) => {
               if (index < 2)
                 return (
-                  <>
+                  <React.Fragment key={event.id}>
                     <Pressable
                       onPress={() => {
                         setShowDetails(event.id);
@@ -119,7 +119,7 @@ function Home() {
                     >
                       <Match data={event} key={event.id} />
                     </Pressable>
-                  </>
+                  </React.Fragment>
                 );
             })}
           </View>

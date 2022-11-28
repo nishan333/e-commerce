@@ -34,7 +34,7 @@ const ShowAll = ({ navigation }) => {
             {query === "previousAll"
               ? previousMatches.map((event, index) => {
                   return (
-                    <>
+                    <React.Fragment key={index}>
                       <Pressable
                         onPress={() => {
                           setShowDetails(event.id);
@@ -43,16 +43,16 @@ const ShowAll = ({ navigation }) => {
                       >
                         <Match data={event} />
                       </Pressable>
-                    </>
+                    </React.Fragment>
                   );
                 })
               : query === "upcomingAll"
               ? upcomingMatches.map((event, index) => {
                   return <Match data={event} key={event.id} />;
                 })
-              : result.map((event) => {
+              : result.map((event, index) => {
                   return (
-                    <>
+                    <React.Fragment key={index}>
                       <Pressable
                         onPress={() => {
                           setShowDetails(event.id);
@@ -61,7 +61,7 @@ const ShowAll = ({ navigation }) => {
                       >
                         <Match data={event} />
                       </Pressable>
-                    </>
+                    </React.Fragment>
                   );
                 })}
           </View>

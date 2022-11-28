@@ -13,6 +13,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useFonts } from "expo-font";
 
+import "react-native-gesture-handler";
+
 export default function App() {
   const [defaultScreen, setDefaultScreen] = useState("Home");
 
